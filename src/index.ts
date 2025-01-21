@@ -1,1 +1,1 @@
-console.log("Hello via Bun!");
+export { NZTrain } from "./classes/NZTrain";

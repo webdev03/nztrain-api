@@ -1,11 +1,33 @@
 {
   "name": "nztrain-api",
-  "module": "./src/index.ts",
+  "version": "1.0.0",
+  "description": "Client for NZTrain",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts --format esm --minify --dts",
+    "prepare": "tsup src/index.ts --format esm --minify --dts",
+    "lint": "prettier --check .",
+    "format": "prettier --write ."
+  },
+  "license": "MIT",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
   "type": "module",
   "devDependencies": {
-    "@types/bun": "latest"
+    "prettier": "3.4.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.3"
   },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+  "dependencies": {
+    "cheerio": "^1.0.0",
+    "ky": "^1.7.4"
   }
 }
