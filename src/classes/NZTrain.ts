@@ -52,16 +52,15 @@ export class NZTrain {
      */
     prefixUrl?: string;
   }) {
+    if (options.prefixUrl && !options.prefixUrl.endsWith("/"))
+      throw Error("Prefix URL must end with a slash");
+
     const client = new NZTrain();
     client.ky = client.ky.extend({
       prefixUrl: options.prefixUrl || "https://train.nzoi.org.nz"
     });
 
     const signInPageReq = await client.ky.get("accounts/sign_in");
-    if (!signInPageReq.ok)
-      throw Error(
-        "Requesting sign-in page failed, status " + signInPageReq.status
-      );
     const signInPageText = await signInPageReq.text();
 
     // To log in, NZTrain wants an authenticity token
