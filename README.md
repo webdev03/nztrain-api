@@ -31,6 +31,10 @@ const client = await NZTrain.init({
 // TODO
 ```
 
+## Note
+
+This project uses a lot of HTML scraping with `cheerio` because the XML endpoints on NZTrain are only available to admins.
+
 ## Contributing
 
 Contributions are welcome! Just make an issue or a pull request!

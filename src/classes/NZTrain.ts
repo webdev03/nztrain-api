@@ -1,6 +1,8 @@
 import * as cheerio from "cheerio";
 import ky from "ky";
 
+import { Problem } from "./Problem";
+
 /**
  * Class that handles the whole code.
  */
@@ -28,7 +30,6 @@ export class NZTrain {
         (_request, _options, response) => {
           for (const cookie of response.headers.getSetCookie()) {
             const [key, val] = cookie.split(";")[0].split("=");
-            console.log(key, "=", val);
             this.cookieJar.set(key, val);
           }
         }
@@ -61,24 +62,45 @@ export class NZTrain {
       throw Error(
         "Requesting sign-in page failed, status " + signInPageReq.status
       );
+    const signInPageText = await signInPageReq.text();
 
+    // To log in, NZTrain wants an authenticity token
     const authenticityToken = cheerio
-      .load(await signInPageReq.text())('input[name="authenticity_token"]')
+      .load(signInPageText)('input[name="authenticity_token"]')
       .attr("value");
     if (!authenticityToken) throw Error("Could not find authenticity token!");
 
-    const signInReq = await client.ky.post("accounts/sign_in", {
-      body: new URLSearchParams({
-        authenticity_token: authenticityToken,
-        "user[email]": options.username,
-        "user[password]": options.password,
-        "user[remember_me]": "0",
-        commit: "Sign+in"
-      })
-    });
-    if (!signInReq.ok)
-      throw Error("Failed to sign in with status " + signInReq.status);
-
+    // Using `fetch` here because `ky` does not respect the manual redirect option
+    const signInReq = await fetch(
+      options.prefixUrl || "https://train.nzoi.org.nz" + "/accounts/sign_in",
+      {
+        method: "POST",
+        headers: {
+          // The cookieJar was filled by the request to get the authenticity token
+          Cookie: [
+            ...client.cookieJar.entries().map((x) => `${x[0]}=${x[1]}`)
+          ].join("; ")
+        },
+        body: new URLSearchParams({
+          // utf8: "\u2713", // this doesn't seem to be checked by the server
+          authenticity_token: authenticityToken,
+          "user[email]": options.username,
+          "user[password]": options.password,
+          "user[remember_me]": "0",
+          commit: "Sign in"
+        }),
+        redirect: "manual"
+      }
+    );
+    // Because we are not using Ky here
+    for (const cookie of signInReq.headers.getSetCookie()) {
+      const [key, val] = cookie.split(";")[0].split("=");
+      client.cookieJar.set(key, val);
+    }
     return client;
+  }
+
+  getProblem(id: number) {
+    return new Problem(this, id);
   }
 }
