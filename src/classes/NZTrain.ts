@@ -71,7 +71,7 @@ export class NZTrain {
 
     // Using `fetch` here because `ky` does not respect the manual redirect option
     const signInReq = await fetch(
-      options.prefixUrl || "https://train.nzoi.org.nz" + "/accounts/sign_in",
+      (options.prefixUrl || "https://train.nzoi.org.nz") + "/accounts/sign_in",
       {
         method: "POST",
         headers: {

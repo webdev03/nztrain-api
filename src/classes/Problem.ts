@@ -34,16 +34,25 @@ export class Problem {
     const problemHTML = $(".statement").html()!;
 
     return {
+      /**
+       * Information about the constraints and input/output format of the problem.
+       */
       info: {
         input: inputInfo,
         output: outputInfo,
         memory: memoryInfo,
         time: timeInfo
       },
+      /**
+       * The problem statement.
+       */
       problem: {
         text: problemText,
         html: problemHTML
       },
+      /**
+       * The sample test cases provided in the problem.
+       */
       samples
     };
   }
@@ -58,10 +67,16 @@ export class Problem {
       .get()
       .map((x) => ({
         /**
-         * The ID of the language
+         * The ID of the language.
          */
         id: $(x).attr("value"),
+        /**
+         * The language type (Either "Current" or "Other" on train.nzoi.org.nz).
+         */
         type: $(x).parent().attr("label"),
+        /**
+         * The name of the language.
+         */
         name: $(x).text()
       }));
   }
