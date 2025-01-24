@@ -39,7 +39,7 @@ export class Submission {
     // If this element exists, then it has been judged
     const judged = $("#submission_judged").length !== 0;
     const score = judged
-      ? Number(/\d+(?=%)/gm.exec($("#submission_judged").text())![0])
+      ? Number(/\d+(?=%)/.exec($("#submission_judged").text())![0])
       : -1;
 
     const resultsTable = $("table.results").has("tbody.test_set").first();
