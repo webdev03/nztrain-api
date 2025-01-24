@@ -23,6 +23,8 @@ export class Problem {
     const problemReq = await this.client.ky.get(`problems/${this.id}`);
     const $ = cheerio.load(await problemReq.text());
 
+    const title = $("#main-page-title-box h1").text();
+
     const [inputInfo, outputInfo, memoryInfo, timeInfo] = $("#main-container b")
       .get()
       .map((x) => $(x.nextSibling!).text());
@@ -38,6 +40,10 @@ export class Problem {
     const problemHTML = $(".statement").html()!;
 
     return {
+      /**
+       * The title of the problem.
+       */
+      title,
       /**
        * Information about the constraints and input/output format of the problem.
        */
