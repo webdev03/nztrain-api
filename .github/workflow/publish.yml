@@ -1,0 +1,22 @@
+name: Publish package to NPM
+on:
+  release:
+    types: [published]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.x
+      - run: bun install --frozen-lockfile
+      - run: bun run build # Just in case the `prepare` doesn't automatically do it
+      # Needs to use NPM for now because Bun does not have provenance support yet
+      # https://github.com/oven-sh/bun/issues/15601
+      - run: bun x npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
