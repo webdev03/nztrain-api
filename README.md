@@ -1,10 +1,10 @@
 # nztrain-api
 
 An unofficial client for the [NZTrain](https://train.nzoi.org.nz) website used by the [NZOI](https://nzoi.org.nz).
-Supports ..todo.. with full TypeScript support and JSDoc comments for an amazing developer experience.
+Includes full TypeScript support and JSDoc comments for an amazing developer experience.
 
 > [!WARNING]
-> This project is unaffiliated with NZTrain or the NZOI! Use at your own risk!
+> This project is unaffiliated with NZTrain or the NZOI! **Use at your own risk!**
 
 ## Installation
 
@@ -16,9 +16,11 @@ npm install nztrain-api
 
 Of course, you can use any package manager you would like, such as `yarn`, `pnpm`, or `bun`.
 
-This project uses [Bun](https://bun.sh) itself so you may want to use it for the best experience.
+This project uses [Bun](https://bun.sh) itself, so you should use it for the best experience.
 
 ## Usage
+
+A quick look at the API style of this library:
 
 ```ts
 import { NZTrain } from "nztrain-api";
@@ -28,12 +30,35 @@ const client = await NZTrain.init({
   password: process.env.NZTRAIN_PASSWORD // Use an environment variable for better security!
 });
 
-// TODO
+const problem = client.getProblem(19); // 'Hailstone Sequences'
+const problemData = await problem.getData();
+
+console.log(problemData.title); // The title of the problem
+console.log(problemData.info); // General information about the problem (input, output, memory limit, time limit)
+console.log(problemData.problem); // The contents of the problem
+console.log(problemData.samples); // The samples of the problem
+console.log(await problem.getLanguages()); // The languages that are available
+
+// SUBMISSION
+
+const code = `
+#include <iostream>
+using namespace std;
+int main() {
+  ...
+`
+
+const submission = await problem.submit(code, "11") // Submit code to the NZTrain judge (id 11 is C++17)
+// ... later
+console.log(await submission.getData()); // Data about the submission
 ```
 
-## Note
+More information is available in the JSDoc comments that should be available in your code editor.
+Alternatively, you can view the [source code](https://github.com/webdev03/nztrain-api) or the type definitions included in the NPM package.
 
-This project uses a lot of HTML scraping with `cheerio` because the XML endpoints on NZTrain are only available to admins.
+## Notes
+
+`nztrain-api` is ESM-only, and cannot be imported with `require`.
 
 ## Contributing
 
