@@ -2,6 +2,7 @@ import * as cheerio from "cheerio";
 import ky from "ky";
 
 import { Problem } from "./Problem";
+import { Submission } from "./Submission";
 
 /**
  * Class that handles the whole code.
@@ -101,5 +102,9 @@ export class NZTrain {
 
   getProblem(id: number) {
     return new Problem(this, id);
+  }
+
+  getSubmission(id: number) {
+    return new Submission(this, id);
   }
 }

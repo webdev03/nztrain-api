@@ -15,6 +15,10 @@ export class Problem {
     this.id = id;
   }
 
+  /**
+   * Gets information about the problem, including the problem statement, samples, and limits.
+   * @returns The data of the problem.
+   */
   async getData() {
     const problemReq = await this.client.ky.get(`problems/${this.id}`);
     const $ = cheerio.load(await problemReq.text());
@@ -69,11 +73,11 @@ export class Problem {
         /**
          * The ID of the language.
          */
-        id: $(x).attr("value"),
+        id: $(x).attr("value")!,
         /**
          * The language type (Either "Current" or "Other" on train.nzoi.org.nz).
          */
-        type: $(x).parent().attr("label"),
+        type: $(x).parent().attr("label")!,
         /**
          * The name of the language.
          */
@@ -109,7 +113,7 @@ export class Problem {
     return new Submission(
       this.client,
       // Extract the ID from the URL
-      Number(/(?<=submissions\/)\d+/gm.exec(req.url))
+      Number(/(?<=submissions\/)\d+/gm.exec(req.url)![0])
     );
   }
 }
