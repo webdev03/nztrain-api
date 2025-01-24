@@ -60,7 +60,10 @@ export class Submission {
         const name = el.find("tr:first th.test_name").text();
 
         // https://github.com/NZOI/nztrain/blob/master/app/views/submissions/show.html.erb#L98
-        const type = name.startsWith("Sample") ? "Sample" : "Test";
+        const type = name.startsWith("Sample")
+          ? ("Sample" as const)
+          : ("Test" as const);
+        const prerequisite = name.endsWith("Prerequisite");
 
         const setScore = Number(el.find("tr:first th.judgement").text());
 
@@ -84,6 +87,7 @@ export class Submission {
           }));
         return {
           type,
+          prerequisite,
           name,
           score: setScore,
           status,
