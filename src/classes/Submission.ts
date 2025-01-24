@@ -80,7 +80,6 @@ export class Submission {
                   : $(y).hasClass("status_partial")
                     ? ("Partial" as const)
                     : null,
-            name: $(y).find(".test_name").first().text().trim(),
             time: $(y).find(".test_time").first().text(),
             memory: $(y).find(".test_memory").first().text(),
             judgement: $(y).find(".judgement").first().text() as Judgement
@@ -88,7 +87,6 @@ export class Submission {
         return {
           type,
           prerequisite,
-          name,
           score: setScore,
           status,
           cases
