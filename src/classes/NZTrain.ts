@@ -100,10 +100,20 @@ export class NZTrain {
     return client;
   }
 
+  /**
+   * Gets a problem.
+   * @param id The numeric ID of the problem.
+   * @returns An instance of `Problem` for further operations.
+   */
   getProblem(id: number) {
     return new Problem(this, id);
   }
 
+  /**
+   * Gets a submission.
+   * @param id The numeric ID of the submission.
+   * @returns An instance of `Submission` for further operations.
+   */
   getSubmission(id: number) {
     return new Submission(this, id);
   }

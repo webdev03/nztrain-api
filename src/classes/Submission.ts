@@ -87,14 +87,42 @@ export class Submission {
             judgement: $(y).find(".judgement").first().text() as Judgement
           }));
         return {
+          /**
+           * Whether the set is a Sample or a Test.
+           */
           type,
+          /**
+           * Whether the set is a prerequisite or not.
+           */
           prerequisite,
+          /**
+           * The total score of the set.
+           */
           score: setScore,
+          /**
+           * The overall status of the set.
+           */
           status,
+          /**
+           * The individual cases in the set.
+           */
           cases
         };
       });
-    if (judged) return { judged, score, results };
-    else return { judged, results };
+    return {
+      /**
+       * Whether the submission has been judged or not.
+       */
+      judged,
+      /**
+       * The score of the submission.
+       * Note: If the submission has not been judged, this will be -1.
+       */
+      score,
+      /**
+       * The results of the submission.
+       */
+      results
+    };
   }
 }
