@@ -30,14 +30,19 @@ export class ProblemSet {
       .map((x) => ({
         /**
          * The title of the problem.
-         * This is here to improve the e
          */
         title: $(x).find("a").text(),
+        /**
+         * The number of points that the problem weighs.
+         */
+        points: Number($(x).find("tr td:nth-child(2)").text()),
+        /**
+         * An instance of `Problem` for further operations.
+         */
         problem: new Problem(
           this.client,
           Number(/(?<=problems\/)\d+/.exec($(x).find("td a").attr("href")!)![0])
-        ),
-        points: Number($(x).find("tr td:nth-child(2)").text())
+        )
       }));
 
     return {
