@@ -53,7 +53,7 @@ const submission = await problem.submit(code, "11"); // Submit code to the NZTra
 console.log(await submission.getData()); // Data about the submission
 ```
 
-More information is available in the JSDoc comments that should be available in your code editor.
+More information is available in the [wiki](https://github.com/webdev03/nztrain-api/wiki) or the JSDoc comments that should be available in your code editor.
 Alternatively, you can view the [source code](https://github.com/webdev03/nztrain-api) or the type definitions included in the NPM package.
 
 ## Notes
