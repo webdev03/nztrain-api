@@ -3,6 +3,7 @@ import ky from "ky";
 
 import { Problem } from "./Problem";
 import { Submission } from "./Submission";
+import { ProblemSet } from "./ProblemSet";
 
 /**
  * Class that handles the whole code.
@@ -116,5 +117,14 @@ export class NZTrain {
    */
   getSubmission(id: number) {
     return new Submission(this, id);
+  }
+
+  /**
+   * Gets a problem set.
+   * @param id The numeric ID of the problem set.
+   * @returns An instance of `ProblemSet` for further operations.
+   */
+  getProblemSet(id: number) {
+    return new ProblemSet(this, id);
   }
 }
