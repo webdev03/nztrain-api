@@ -119,7 +119,7 @@ export class Problem {
     return new Submission(
       this.client,
       // Extract the ID from the URL
-      Number(/(?<=submissions\/)\d+/gm.exec(req.url)![0])
+      Number(/(?<=submissions\/)\d+/.exec(req.url)![0])
     );
   }
 }
