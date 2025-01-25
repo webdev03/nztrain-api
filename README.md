@@ -46,9 +46,9 @@ const code = `
 using namespace std;
 int main() {
   ...
-`
+`;
 
-const submission = await problem.submit(code, "11") // Submit code to the NZTrain judge (id 11 is C++17)
+const submission = await problem.submit(code, "11"); // Submit code to the NZTrain judge (id 11 is C++17)
 // ... later
 console.log(await submission.getData()); // Data about the submission
 ```
