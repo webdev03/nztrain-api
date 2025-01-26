@@ -105,7 +105,7 @@ export class Problem {
     const $ = cheerio.load(await submitPageReq.text());
     const authenticityToken = $(
       'form#paste_new_submission input[name="authenticity_token"]'
-    ).attr("value");
+    ).attr("value")!;
 
     const formData = new FormData();
     formData.set("authenticity_token", authenticityToken);
