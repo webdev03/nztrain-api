@@ -1,4 +1,3 @@
-import { Problem } from "../src/classes/Problem";
 import { client } from "./shared";
 import { expect, test } from "bun:test";
 
