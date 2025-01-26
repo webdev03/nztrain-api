@@ -94,7 +94,7 @@ export class Problem {
   /**
    * Submits code to NZTrain for judging.
    * @param code The code to submit.
-   * @param langId The ID of the language to submit with. `.getLanguages()` returns all available languages.
+   * @param langId The language ID obtained from `.getLanguages()`.
    * @returns An instance of Submission for further operations.
    */
   async submit(code: string, langId: string) {

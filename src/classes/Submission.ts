@@ -166,7 +166,7 @@ export class Submission {
       judged,
       /**
        * The score of the submission.
-       * Note: If the submission has not been judged, this will be -1.
+       * Returns -1 if the submission has not been judged yet.
        */
       score,
       /**

@@ -6,7 +6,7 @@ import { Submission } from "./Submission";
 import { ProblemSet } from "./ProblemSet";
 
 /**
- * Class that handles the whole code.
+ * Main client class for interacting with NZTrain.
  */
 export class NZTrain {
   /**
