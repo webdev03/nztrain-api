@@ -9,7 +9,6 @@
   ],
   "scripts": {
     "build": "tsup src/index.ts --format esm --minify --dts",
-    "prepare": "tsup src/index.ts --format esm --minify --dts",
     "lint": "prettier --check .",
     "format": "prettier --write ."
   },

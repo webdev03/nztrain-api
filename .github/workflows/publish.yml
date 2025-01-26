@@ -14,9 +14,13 @@ jobs:
         with:
           bun-version: 1.2.0
       - run: bun install --frozen-lockfile
-      - run: bun run build # Just in case the `prepare` doesn't automatically do it
+      - run: bun run build
       # Needs to use NPM for now because Bun does not have provenance support yet
       # https://github.com/oven-sh/bun/issues/15601
-      - run: bun x npm publish --provenance --access public
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+          registry-url: "https://registry.npmjs.org"
+      - run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
