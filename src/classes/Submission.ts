@@ -1,5 +1,6 @@
 import * as cheerio from "cheerio";
 import type { NZTrain } from "./NZTrain";
+import { Problem } from "./Problem";
 
 // https://github.com/NZOI/nztrain/blob/master/app/models/submission/judge_data.rb#L153
 type Judgement =
@@ -142,6 +143,22 @@ export class Submission {
           cases
         };
       });
+
+    // Sample test cases also have highlights, so the last must be selected
+    const source = $("div.highlight pre").last().text();
+
+    const problem = new Problem(
+      this.client,
+      Number(
+        /(?<=problems\/)\d+/.exec(
+          $("#main-container p b:contains('Problem:')")
+            .first()
+            .next()
+            .attr("href")!
+        )![0]
+      )
+    );
+
     return {
       /**
        * Whether the submission has been judged or not.
@@ -159,7 +176,15 @@ export class Submission {
       /**
        * The results of the submission.
        */
-      results
+      results,
+      /**
+       * The source code of the submission.
+       */
+      source,
+      /**
+       * The problem that the submission is for, returned as a `Problem` for further operations.
+       */
+      problem
     };
   }
 }
