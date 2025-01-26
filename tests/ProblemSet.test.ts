@@ -3,6 +3,7 @@ import { client } from "./shared";
 import { expect, test } from "bun:test";
 
 test("problem set data", async () => {
+  // The problem set for NZIC 2020 Round 1 (on the front page of train.nzoi.org.nz)
   expect(await client.getProblemSet(401).getData()).toEqual({
     title: "NZIC 2020 Round 1",
     problems: [

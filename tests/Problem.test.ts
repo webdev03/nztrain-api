@@ -17,12 +17,15 @@ test("languages list", async () => {
     { id: "17", type: "Other", name: "Python 3.6 (PyPy 7.3)" }
   ];
 
+  // Some random questions
+  // Every problem should have the same languages
   for (const id of [19, 73, 614, 1113]) {
     expect(await client.getProblem(id).getLanguages()).toEqual(languages);
   }
 });
 
 test("problem data", async () => {
+  // The problem 'Hello, World!'
   expect(await client.getProblem(73).getData()).toEqual({
     title: "Hello, World!",
     info: {
