@@ -15,6 +15,17 @@ type Judgement =
   | "Pending"
   | "Cancelled";
 
+// https://github.com/NZOI/nztrain/blob/master/app/models/submission/judge_data.rb#L105
+type CompilationStatus =
+  | "Time Limit Exceeded"
+  | "Time Limit Exceeded (Wall)"
+  | "Compilation Error"
+  | "Fatal Signal"
+  | "Memory Limit Exceeded"
+  | "Pending"
+  | "Success"
+  | "Errored";
+
 /**
  * Class for problem Submissions on NZTrain.
  * @param id The ID of the submission.
@@ -41,6 +52,28 @@ export class Submission {
     const score = judged
       ? Number(/\d+(?=%)/.exec($("#submission_judged").text())![0])
       : -1;
+
+    const compilation =
+      $("tbody.compilation").length === 0
+        ? null
+        : {
+            /**
+             * The command used on the judging server to compile the code.
+             */
+            command: $(
+              "tbody.compilation tr th.compile_command span.code"
+            ).text(),
+            /**
+             * The status of the compilation.
+             */
+            status: $(
+              "tbody.compilation tr th.compile_status"
+            ).text() as CompilationStatus,
+            /**
+             * The output of the compilation command.
+             */
+            output: $("tbody.compilation tr:nth-child(2) td span.code").text()
+          };
 
     const resultsTable = $("table.results").has("tbody.test_set").first();
 
@@ -119,6 +152,10 @@ export class Submission {
        * Note: If the submission has not been judged, this will be -1.
        */
       score,
+      /**
+       * Information about the compilation of the code, if applicable.
+       */
+      compilation,
       /**
        * The results of the submission.
        */
